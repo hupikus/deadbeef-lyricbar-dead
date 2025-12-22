@@ -32,7 +32,7 @@ In addition, if your tracks don't contain enough metadata, external lyrics provi
 However, I recommend tools like [beets](https://github.com/beetbox/beets) to have the lyrics inside the tracks' metadata.
 
 ## Development Status
-The original plugin is discontinued for unknown times, as DeaDBeeF developers act agressively towards Russian-speaking users (see [the related commit](https://github.com/DeaDBeeF-Player/deadbeef/commit/d68495890fab7e3ac63674df72d8de82a592d78f)).
+The original plugin is discontinued for unknown time, as DeaDBeeF developers act agressively towards Russian-speaking users (see [the related commit](https://github.com/DeaDBeeF-Player/deadbeef/commit/d68495890fab7e3ac63674df72d8de82a592d78f)).
 > Besides, I haven't been actively developing it lately anyways.
 > Hopefully, the archived version of the plugin is usable enough, though.
 - original plugin dev

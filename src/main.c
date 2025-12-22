@@ -79,13 +79,13 @@ static int lyricbar_connect() {
 
 __attribute__ ((visibility ("default")))
 #if GTK_MAJOR_VERSION == 2
-DB_plugin_t *ddb_lyricbar_gtk2_load(DB_functions_t *ddb) {
+DB_plugin_t *ddb_lyricbar_dead_gtk2_load(DB_functions_t *ddb) {
 #else
-DB_plugin_t *ddb_lyricbar_gtk3_load(DB_functions_t *ddb) {
+DB_plugin_t *ddb_lyricbar_dead_gtk3_load(DB_functions_t *ddb) {
 #endif
 	deadbeef = ddb;
-	bindtextdomain("deadbeef-lyricbar", "/usr/share/locale");
-	textdomain("deadbeef-lyricbar");
+	bindtextdomain("deadbeef-lyricbar-dead", "/usr/share/locale");
+	textdomain("deadbeef-lyricbar-dead");
 	remove_action.title = _(remove_action.title);
 	ensure_lyrics_path_exists();
 	return DB_PLUGIN(&plugin);
@@ -100,7 +100,7 @@ static DB_misc_t plugin = {
 	.plugin.type = DB_PLUGIN_MISC,
 	.plugin.name = "Lyricbar-dead",
 #if GTK_MAJOR_VERSION == 2
-	.plugin.id = "lyricbar-gtk2",
+	.plugin.id = "lyricbar-dead-gtk2",
 #else
 	.plugin.id = "lyricbar-dead-gtk3",
 #endif
