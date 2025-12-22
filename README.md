@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/loskutov/deadbeef-lyricbar.svg)](https://travis-ci.org/loskutov/deadbeef-lyricbar)
-# DeaDBeeF Lyricbar Plugin
+# DeaDBeeF Lyricbar-dead Plugin
 A simple plugin for DeaDBeeF audio player that fetches and shows the song’s lyrics using track metadata and user-provided lyric fetchers.
+This fork focuses on fixing several flaws.
+Progress: None
 
 ![Screenshot](https://user-images.githubusercontent.com/1202012/51805459-90148b80-227e-11e9-9c0d-1df1d33fe1cd.png)
 
@@ -30,6 +32,7 @@ In addition, if your tracks don't contain enough metadata, external lyrics provi
 However, I recommend tools like [beets](https://github.com/beetbox/beets) to have the lyrics inside the tracks' metadata.
 
 ## Development Status
-The plugin is now abandoned, as DeaDBeeF developers act agressively towards Russian-speaking users (see [the related commit](https://github.com/DeaDBeeF-Player/deadbeef/commit/d68495890fab7e3ac63674df72d8de82a592d78f)).
-Besides, I haven't been actively developing it lately anyways.
-Hopefully, the archived version of the plugin is usable enough, though.
+The original plugin is discontinued for unknown times, as DeaDBeeF developers act agressively towards Russian-speaking users (see [the related commit](https://github.com/DeaDBeeF-Player/deadbeef/commit/d68495890fab7e3ac63674df72d8de82a592d78f)).
+> Besides, I haven't been actively developing it lately anyways.
+> Hopefully, the archived version of the plugin is usable enough, though.
+- original plugin dev

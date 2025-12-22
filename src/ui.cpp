@@ -56,7 +56,7 @@ void set_lyrics(DB_playItem_t *track, ustring lyrics) {
 
 			tags.clear();
 			if (italic) tags.push_back(tagItalic);
-			if (bold)   tags.push_back(tagBold);
+			//if (bold)   tags.push_back(tagBold);
 			refBuffer->insert_with_tags(refBuffer->end(),
 			                            lyrics.substr(prev_mark, min(bold_mark, italic_mark) - prev_mark),
 			                            tags);

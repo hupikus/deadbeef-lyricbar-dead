@@ -67,7 +67,7 @@ bool save_cached_lyrics(const string &artist, const string &title, const string 
 	string filename = cached_filename(artist, title);
 	ofstream t(filename);
 	if (!t) {
-		cerr << "lyricbar: could not open file for writing: " << filename << endl;
+		cerr << "lyricbar-dead: could not open file for writing: " << filename << endl;
 		return false;
 	}
 	t << lyrics;
@@ -96,13 +96,13 @@ experimental::optional<ustring> get_lyrics_from_metadata(DB_playItem_t *track) {
 
 experimental::optional<ustring> get_lyrics_from_script(DB_playItem_t *track) {
 	std::string buf = std::string(4096, '\0');
-	deadbeef->conf_get_str("lyricbar.customcmd", nullptr, &buf[0], buf.size());
+	deadbeef->conf_get_str("lyricbar-dead.customcmd", nullptr, &buf[0], buf.size());
 	if (!buf[0]) {
 		return {};
 	}
 	auto tf_code = deadbeef->tf_compile(buf.data());
 	if (!tf_code) {
-		std::cerr << "lyricbar: Invalid script command!\n";
+		std::cerr << "lyricbar-dead: Invalid script command!\n";
 		return {};
 	}
 	ddb_tf_context_t ctx{};
@@ -112,7 +112,7 @@ experimental::optional<ustring> get_lyrics_from_script(DB_playItem_t *track) {
 	int command_len = deadbeef->tf_eval(&ctx, tf_code, &buf[0], buf.size());
 	deadbeef->tf_free(tf_code);
 	if (command_len < 0) {
-		std::cerr << "lyricbar: Invalid script command!\n";
+		std::cerr << "lyricbar-dead: Invalid script command!\n";
 		return {};
 	}
 
@@ -123,7 +123,7 @@ experimental::optional<ustring> get_lyrics_from_script(DB_playItem_t *track) {
 	try {
 		spawn_command_line_sync(buf, &script_output, nullptr, &exit_status);
 	} catch (const Glib::Error &e) {
-		std::cerr << "lyricbar: " << e.what() << "\n";
+		std::cerr << "lyricbar-dead: " << e.what() << "\n";
 		return {};
 	}
 
@@ -133,7 +133,7 @@ experimental::optional<ustring> get_lyrics_from_script(DB_playItem_t *track) {
 
 	auto res = ustring{std::move(script_output)};
 	if (!res.validate()) {
-		cerr << "lyricbar: script output is not a valid UTF8 string!\n";
+		cerr << "lyricbar-dead: script output is not a valid UTF8 string!\n";
 		return {};
 	}
 	return {std::move(res)};
@@ -193,7 +193,7 @@ int mkpath(const string &name, mode_t mode) {
 	return 0;
 }
 
-int remove_from_cache_action(DB_plugin_action_t *, int ctx) {
+int remove_from_cache_action(DB_plugin_action_t *, ddb_action_context_t ctx) {
 	if (ctx == DDB_ACTION_CTX_SELECTION) {
 		pl_lock_guard guard;
 

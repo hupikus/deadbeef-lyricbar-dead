@@ -6,20 +6,23 @@ LDFLAGS+=-flto
 
 prefix ?= $(out)
 prefix ?= /usr
+ifeq ($(prefix),)
+	prefix = /usr
+endif
 
 gtk3: GTKMM=gtkmm-3.0
 gtk3: GTK=gtk+-3.0
-gtk3: LYRICBAR=ddb_lyricbar_gtk3.so
-gtk3: lyricbar
+gtk3: LYRICBAR_DEAD=ddb_lyricbar_dead_gtk3.so
+gtk3: lyricbar-dead
 
 gtk2: GTKMM=gtkmm-2.4
 gtk2: GTK=gtk+-2.0
-gtk2: LYRICBAR=ddb_lyricbar_gtk2.so
-gtk2: lyricbar
+gtk2: LYRICBAR_DEAD=ddb_lyricbar_dead_gtk2.so
+gtk2: lyricbar-dead
 
-lyricbar: ui.o utils.o main.o
-	$(if $(LYRICBAR),, $(error You should only access this target via "gtk3" or "gtk2"))
-	$(CXX) -shared $(LDFLAGS) main.o ui.o utils.o -o $(LYRICBAR) $(LIBS)
+lyricbar-dead: ui.o utils.o main.o
+	$(if $(LYRICBAR_DEAD),, $(error You should only access this target via "gtk3" or "gtk2"))
+	$(CXX) -shared $(LDFLAGS) main.o ui.o utils.o -o $(LYRICBAR_DEAD) $(LIBS)
 
 ui.o: src/ui.cpp
 	$(CXX) src/ui.cpp -c $(LIBFLAGS) $(CXXFLAGS)
@@ -30,11 +33,11 @@ utils.o: src/utils.cpp
 main.o: src/main.c
 	$(CC) $(CFLAGS) src/main.c -c `pkg-config --cflags $(GTK)`
 
-install:
+install: 
 	install -d $(prefix)/lib/deadbeef
 	install -d $(prefix)/share/locale/ru/LC_MESSAGES
 	install -m 666 -D *.so $(prefix)/lib/deadbeef
-	msgfmt gettext/ru/deadbeef-lyricbar.po -o $(prefix)/share/locale/ru/LC_MESSAGES/deadbeef-lyricbar.mo
+	msgfmt gettext/ru/deadbeef-lyricbar-dead.po -o $(prefix)/share/locale/ru/LC_MESSAGES/deadbeef-lyricbar-dead.mo
 
 clean:
 	rm -f *.o *.so

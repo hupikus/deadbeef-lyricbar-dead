@@ -73,7 +73,7 @@ static int lyricbar_connect() {
 		fprintf(stderr, "%s: can't find gtkui plugin\n", plugin.plugin.id);
 		return -1;
 	}
-	gtkui_plugin->w_reg_widget("Lyricbar", 0, w_lyricbar_create, "lyricbar", NULL);
+	gtkui_plugin->w_reg_widget("Lyricbar-dead", 0, w_lyricbar_create, "lyricbar-dead", NULL);
 	return 0;
 }
 
@@ -98,15 +98,15 @@ static DB_misc_t plugin = {
 	.plugin.version_major = 0,
 	.plugin.version_minor = 1,
 	.plugin.type = DB_PLUGIN_MISC,
-	.plugin.name = "Lyricbar",
+	.plugin.name = "Lyricbar-dead",
 #if GTK_MAJOR_VERSION == 2
 	.plugin.id = "lyricbar-gtk2",
 #else
-	.plugin.id = "lyricbar-gtk3",
+	.plugin.id = "lyricbar-dead-gtk3",
 #endif
-	.plugin.descr = "Lyricbar plugin for DeadBeeF audio player.\nFetches and shows song’s lyrics.\n",
-	.plugin.copyright = "Copyright (C) 2015 Ignat Loskutov <ignat.loskutov@gmail.com>\n",
-	.plugin.website = "https://github.com/loskutov/deadbeef-lyricbar",
+	.plugin.descr = "Lyricbar (dead) plugin for DeadBeeF audio player.\nFetches and shows song’s lyrics.\n",
+	.plugin.copyright = "Copyright (C) 2015 Ignat Loskutov <ignat.loskutov@gmail.com>\nFork (2025) by Hupik. Not copyrighted.",
+	.plugin.website = "https://github.com/hupikus/deadbeef-lyricbar-dead",
 	.plugin.connect = lyricbar_connect,
 	.plugin.disconnect = lyricbar_disconnect,
 	.plugin.configdialog = settings_dlg,
