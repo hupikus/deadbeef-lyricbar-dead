@@ -2,38 +2,64 @@
 #ifndef LYRICBAR_UTILS_H
 #define LYRICBAR_UTILS_H
 
-#include <gtk/gtk.h>
 #include <deadbeef/deadbeef.h>
-#include <deadbeef/gtkui_api.h>
+#include <curl/curl.h>
+
+
+#include "main.h"
+#include "ui.h"
 
 #ifndef __cplusplus
 #include <stdbool.h>
 #else
-#include <glibmm/main.h>
-#include <experimental/optional>
 
-#include "main.h"
+#include <string>
+#include <vector>
 
-struct pl_lock_guard {
-	pl_lock_guard() { deadbeef->pl_lock(); }
-	~pl_lock_guard() { deadbeef->pl_unlock(); }
-};
+using namespace std;
 
 struct id3v2_tag {
 	DB_id3v2_tag_t tag{};
 	~id3v2_tag() { deadbeef->junk_id3v2_free(&tag); }
 };
 
-extern const DB_playItem_t *last;
+struct parsed_lyrics{
+	std::string lyrics;
+	bool sync;
+};
+
+struct sync{
+	vector<string> synclyrics;
+	vector<double> position;
+};
+
+struct chopped{
+	string past;
+	string present;
+	string future;
+};
+
+string specialforplus(const char* text);
+
+string urlencode(const string &s);
 
 bool is_playing(DB_playItem_t *track);
 
 void update_lyrics(void *tr);
 
-std::experimental::optional<Glib::ustring> download_lyrics_from_lyricwiki(DB_playItem_t *track);
-std::experimental::optional<Glib::ustring> get_lyrics_from_script(DB_playItem_t *track);
+struct parsed_lyrics get_lyrics_from_metadata(DB_playItem_t *track);
+
+void save_meta_data(DB_playItem_t *playing_song, struct parsed_lyrics lyrics);
 
 int mkpath(const std::string &name, mode_t mode);
+
+string replace_string(std::string subject, const std::string& search, const std::string& replace);
+
+vector<string> split(string s, string delimiter);
+
+size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
+
+string text_downloader(curl_slist *slist, string url, string post);
 
 extern "C" {
 #endif // __cplusplus
@@ -45,4 +71,5 @@ void ensure_lyrics_path_exists();
 #ifdef __cplusplus
 }
 #endif
+
 #endif // LYRICBAR_UTILS_H
