@@ -45,7 +45,7 @@ vector<int> sizelines(DB_playItem_t * track, string lyrics) {
 	int temporaly = 0;
 	vector<int>  values;
 
-//	I didn't found another way to be sure lyrics are displayed than wait millisenconds with nanosleep.
+//	They didn't find another way to be sure lyrics are displayed than wait millisenconds with nanosleep.
 	nanosleep(&tss, NULL);
 	deadbeef->pl_lock();
 	values.push_back(lyricbar->get_allocation().get_height()*(deadbeef->conf_get_int("lyricbar.vpostion", 50))/100);
@@ -89,44 +89,12 @@ void set_lyrics(DB_playItem_t *track, string past, string present, string future
 
 		refBuffer->insert_with_tags(refBuffer->begin(), title, tagsTitle);
 
-<<<<<<< HEAD
-		bool italic = false;
-		bool bold = false;
-		size_t prev_mark = 0;
-		vector<RefPtr<TextTag>> tags;
-		while (prev_mark != ustring::npos) {
-			size_t italic_mark = lyrics.find("''", prev_mark);
-			if (italic_mark == ustring::npos) {
-				refBuffer->insert(refBuffer->end(), lyrics.substr(prev_mark));
-				break;
-			}
-			size_t bold_mark = ustring::npos;
-			if (italic_mark < lyrics.size() - 2 && lyrics[italic_mark + 2] == '\'')
-				bold_mark = italic_mark;
-
-			tags.clear();
-			if (italic) tags.push_back(tagItalic);
-			// Comment out for test
-			//if (bold)   tags.push_back(tagBold);
-			refBuffer->insert_with_tags(refBuffer->end(),
-			                            lyrics.substr(prev_mark, min(bold_mark, italic_mark) - prev_mark),
-			                            tags);
-
-			if (bold_mark == ustring::npos) {
-				prev_mark = italic_mark + 2;
-				italic = !italic;
-			} else {
-				prev_mark = bold_mark + 3;
-				bold = !bold;
-			}
-=======
 		if (g_utf8_validate(future.c_str(),-1,NULL)){
 			refBuffer->insert_with_tags(refBuffer->end(), string{"\n"} + artist + "\n\n", tagsArtist);
 			refBuffer->insert_with_tags(refBuffer->end(), padding, tagPadding);
 			refBuffer->insert_with_tags(refBuffer->end(),past, tagsNosyncline);
 			refBuffer->insert_with_tags(refBuffer->end(),present, tagsSyncline);
 			refBuffer->insert_with_tags(refBuffer->end(),future, tagsNosyncline);
->>>>>>> master
 		}
 		else{
 			death_signal = 1;
