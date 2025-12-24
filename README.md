@@ -1,38 +1,48 @@
-[![Build Status](https://travis-ci.org/loskutov/deadbeef-lyricbar.svg)](https://travis-ci.org/loskutov/deadbeef-lyricbar)
-# DeaDBeeF Lyricbar-dead Plugin
-A simple plugin for DeaDBeeF audio player that fetches and shows the song’s lyrics using track metadata and user-provided lyric fetchers.
-This fork focuses on fixing several flaws.
-Progress: None
+Based on loskutov https://github.com/loskutov/deadbeef-lyricbar
 
-![Screenshot](https://user-images.githubusercontent.com/1202012/51805459-90148b80-227e-11e9-9c0d-1df1d33fe1cd.png)
+# DeaDBeeF Lyricbar Plugin
+Plugin for [DeaDBeeF audio player](https://github.com/DeaDBeeF-Player/deadbeef) that fetches and shows the song’s synclyrics using various website, also from metadata or lrc/txt file (same name on same folder as track).
 
+![GIF](https://github.com/AsVHEn/deadbeef-lyricbar/assets/4272271/2506a8cb-2c94-4a73-99c7-33b7aa22e26e)
 
-Inspired by [Infobar Plugin](https://bitbucket.org/dsimbiriatin/deadbeef-infobar/). If you need more functionality,
-check [my fork of it](https://github.com/loskutov/deadbeef-infobar-ng), containing a few bug-fixes and minor improvements.
 
 ## Dependencies
-To use this plugin, you need to have [gtkmm](http://www.gtkmm.org/) installed.
-It is available in the repositories of most modern distributions (e.g. in Ubuntu you'll have to install `libgtkmm-3.0-dev` for the gtk3 version of lyricbar).
+To use this plugin, you need to have [gtkmm](http://www.gtkmm.org/) and [gtk3](https://www.gtk.org/) installed. (also: libcurl and libtag)
 
 You need deadbeef.h file to build this plugin. The file /usr/include/deadbeef/deadbeef.h should've been installed with the player itself. If not -- look for deadbeef-plugin-dev package, or something like this. Or get the file from a source tarball.
 
 ## Installation
+Just download compiled file _ddb_lyricbar_gtk3.so_, and copy it to ~/.local/lib/deadbeef or:
+
 Clone this repository and perform the following:
 ```sh
-make [gtk2 or gtk3]
-sudo cp *.so /usr/lib/deadbeef # depends on where deadbeef is installed
+make [gtk3]
+sudo install
 # OR, to install for the current user only
-mkdir -p ~/.local/lib/deadbeef && cp *.so ~/.local/lib/deadbeef
+mkdir -p ~/.local/lib/deadbeef && cp *.so ~/.local/lib/deadbeef # depends on where deadbeef is installed
+sudo cp ./gettext/[your language]/*.mo /usr/share/locale/[your language]/LC_MESSAGES/ 
 ```
 
 ## Usage
-Activate Design Mode (View → Design mode) and add Lyricbar somewhere. Disable Design Mode back and enjoy the music :)
+Activate Design Mode (View → Design mode) and add Lyricbar somewhere. Disable Design Mode back and edit appareance if you want in config options:
 
-In addition, if your tracks don't contain enough metadata, external lyrics providers can be used (see plugin preferences, the script launch command can use the whole [DeaDBeeF title formatting](https://github.com/DeaDBeeF-Player/deadbeef/wiki/Title-formatting-2.0) power, it's supposed to output the lyrics to stdout).
-However, I recommend tools like [beets](https://github.com/beetbox/beets) to have the lyrics inside the tracks' metadata.
+![Config](https://github.com/user-attachments/assets/8035a41f-dea5-4ea9-89cf-894ea4bfc30d)
 
-## Development Status
-The original plugin is discontinued for unknown times, as DeaDBeeF developers act agressively towards Russian-speaking users (see [the related commit](https://github.com/DeaDBeeF-Player/deadbeef/commit/d68495890fab7e3ac63674df72d8de82a592d78f)).
-> Besides, I haven't been actively developing it lately anyways.
-> Hopefully, the archived version of the plugin is usable enough, though.
-- original plugin dev
+Lyrics will be stored on tags "LYRICS" for synced, and "UNSYNCEDLYRICS" for non-sync. SYLT tags will be removed if exists.
+
+Automatic download if no tag or file is found. Also you can manually search for lyrics with a right-click on plugin. ~~To be able to get lyrics from Spoti-fy you will need to input your account's SP-DC on Edit/Preferences/Plugins/Lyricbar (One easy way to know your SP-DC: Install [Cookie-editor](https://cookie-editor.com/) browser extension and login into your account).~~ (Not anymore because of Spotify changes).
+
+~~Same to use AZlyrics with the last part of a manual search URL.~~ (Trying to find another way).
+![Search](https://github.com/user-attachments/assets/fefa231b-7241-4bb9-b0ce-f76ccd69e8b8)
+
+Right now, working sites are:
+- LRCLIB.
+- RCLyricsBand.
+- Megalobiz.
+- Music 163.
+
+
+There is also a window to edit lyrics.
+![Edit](https://github.com/user-attachments/assets/f3aa7ac5-21c2-4b85-8568-6d4930162bbd)
+
+In addition, if you want to traslate to your language you only need copy deadbeef-lyricbar/gettext/deadbeef-lyricbar.pot (only spanish is available at the moment), rename to deadbeef-lyricbar.po, edit it and put /gettext/[your language]/ before compiling. Also if you're not satisfied with lyrics providers you can help adding another ones :D.

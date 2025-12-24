@@ -1,6 +1,6 @@
 with import <nixpkgs> {}; {
   lyricbar = stdenv.mkDerivation {
-    name = "deadbeef-lyricbar-dead";
+    name = "deadbeef-lyricbar";
     buildInputs = [
       stdenv
       pkgconfig
